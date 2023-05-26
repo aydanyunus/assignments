@@ -1,0 +1,121 @@
+.header {
+  .nav {
+    display: flex;
+    align-items: center;
+    &__menu {
+      padding-top: 29px;
+      padding-bottom: 34px;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      list-style-type: none;
+    }
+    &__item {
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      letter-spacing: 1.1px;
+      @include text(11px, $fw-normal, 22px);
+      .nav__link {
+        display: inline-block;
+        color: $textColor;
+        &:hover {
+          color: $textColorBlue;
+        }
+      }
+      .nav__link--active {
+        color: $textColorBlue;
+      }
+    }
+  }
+  .top-menu {
+    display: none;
+    padding-top: 29px;
+    justify-content: flex-end;
+    position: relative;
+    padding-bottom: 23px;
+    .menu-btn {
+      background: $blackColor;
+      width: 44px;
+      height: 37px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      .line {
+        width: 17px;
+        height: 2px;
+        background: $white;
+        display: block;
+        margin-bottom: 2px;
+      }
+    }
+    .menu-btn--active {
+      position: relative;
+      .line {
+        position: absolute;
+      }
+      .line-two {
+        left: 14px;
+        top: 16px;
+        transform: rotate(-135deg);
+      }
+      .line-one {
+        left: 14px;
+        top: 16px;
+        transform: rotate(-45deg);
+      }
+      .line-three {
+        display: none;
+      }
+    }
+    .dropdown {
+      background: $menuColor;
+      position: absolute;
+      width: 182px;
+      height: auto;
+      right: 0;
+      top: 64px;
+      display: none;
+      &__menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 100%;
+        .menu__item {
+          @extend .nav__item;
+          width: 100%;
+          padding: 3px;
+          &:hover {
+            background: $greyish
+          }
+          .menu__link {
+            @extend .nav__link;
+            padding-left: 13px;
+            width: 100%;
+          }
+          .menu__link--active {
+            @extend .nav__link--active;
+          }
+        }
+      }
+    }
+    .dropdown--active {
+      display: flex;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .header {
+    .nav {
+      display: none;
+    }
+    .top-menu {
+      display: flex;
+    }
+  }
+}

@@ -1,0 +1,62 @@
+.shots {
+  background-color: #e5e5e5;
+  margin-top: 37px;
+  padding-top: 47px;
+  padding-bottom: 49px;
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    .lastest-shots {
+      @include text(16px, $fw-bold, 22px);
+      color: $titleColor;
+    }
+    .go-to-page {
+      @include text(13px, $fw-bold, 22px);
+      color: $titleColor;
+    }
+  }
+  .instagram-shots {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: space-between;
+    &__item {
+      img {
+        max-width: 100%;
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .shots {
+    .go-to-page {
+      display: none;
+    }
+    .instagram-shots {
+      .instagram-shots__item {
+        &:last-child {
+          display: flex;
+          flex: 0;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .shots {
+    .instagram-shots {
+      .instagram-shots__item {
+        &:not(:first-child) {
+          display: flex;
+          flex: 0;
+        }
+      }
+    }
+  }
+}

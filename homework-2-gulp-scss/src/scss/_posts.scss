@@ -1,0 +1,84 @@
+.posts {
+  margin-top: 69px;
+  .post__title {
+    h3 {
+      @include text(16px, $fw-bold, 22px);
+      text-transform: uppercase;
+      color: $titleColor;
+    }
+  }
+  .recent__posts {
+    margin-top: 24px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap: 25px;
+    row-gap: 32px;
+    .post__item {
+      display: flex;
+      flex-direction: row;
+      width: 47%;
+      .post__img {
+        img {
+          max-width: 100%;
+        }
+      }
+      .post__content {
+        margin-left: 20px;
+        .post__header {
+          @include text(16px, $fw-bold, 30px);
+          color: $titleColor;
+        }
+        .post__info {
+          @include text(12px, $fw-normal, 20px);
+          color: $gray;
+        }
+        .text {
+          @include text(14px, $fw-normal, 26px);
+          color: $textColor;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .posts {
+    .recent__posts {
+      flex-direction: column;
+      .post__item {
+        width: 100%;
+        .post__img {
+          width: 50%;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .posts {
+    .recent__posts {
+      .post__item {
+        flex-direction: column;
+        .post__content {
+          margin-left: 0;
+          .text {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .posts {
+    .recent__posts {
+      .post__img{
+        width: 100%;
+      }
+    }
+  }
+
+}

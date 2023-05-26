@@ -1,0 +1,91 @@
+.footer {
+  background: $blackColor;
+  &__wrapper {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+    padding-top: 66px;
+    padding-bottom: 70px;
+    .footer__title {
+      text-transform: uppercase;
+      color: $whiteColor;
+      @include text(16px, $fw-bold, 22px);
+    }
+    .footer__text {
+      margin-top: 22px;
+      color: $lightGray;
+      @include text(16px, $fw-normal, 28px);
+    }
+    .icons {
+      margin-top: 37px;
+      &__list {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .icon__item {
+          background: $bgColor;
+          display: flex;
+          .icon__link {
+            border: 2px solid #f8902e;
+            width: 34px;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 6px;
+            border-radius: 30px;
+            &--rss {
+              border-color: #f8902e;
+            }
+            &--fb {
+              border-color: #39599f;
+            }
+            &--twitter {
+              border-color: #45b0e3;
+            }
+            &--dribbble {
+              border-color: #d97ab0;
+            }
+            &--pinterest {
+              border-color: #cc212c;
+            }
+            .icon {
+              width: 10px;
+              height: 10px;
+            }
+            .icon-rss {
+              fill: #f8902e;
+            }
+            .icon-facebook {
+              fill: #39599f;
+            }
+            .icon-twitter {
+              fill: #45b0e3;
+            }
+            .icon-dribbble {
+              fill: #d97ab0;
+            }
+            .icon-pinterest {
+              fill: #cc212c;
+            }
+          }
+        }
+      }
+    }
+    .contact-detail {
+      margin-top: 34px;
+      .detail-info {
+        color: $lightGray;
+        @include text(16px, $fw-normal, 26px);
+      }
+    }
+  }
+}
+
+@media  (max-width: 768px) {
+  .detail-info {
+    span {
+      display: block;
+    }
+  }
+}
