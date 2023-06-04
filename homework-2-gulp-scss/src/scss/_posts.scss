@@ -1,5 +1,5 @@
 .posts {
-  margin-top: 69px;
+  margin-top: 66px;
   .post__title {
     h3 {
       @include text(16px, $fw-bold, 22px);
@@ -12,17 +12,13 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    column-gap: 25px;
-    row-gap: 32px;
+    justify-content: space-between;
+    row-gap: 30px;
     .post__item {
       display: flex;
       flex-direction: row;
       width: 47%;
-      .post__img {
-        img {
-          max-width: 100%;
-        }
-      }
+  
       .post__content {
         margin-left: 20px;
         .post__header {
@@ -36,33 +32,52 @@
         .text {
           @include text(14px, $fw-normal, 26px);
           color: $textColor;
+          margin-top: 13px;
         }
       }
     }
   }
 }
 
-@media (max-width: 768px) {
+
+@media (max-width: 991px) {
   .posts {
+    margin-top: 56px;
     .recent__posts {
       flex-direction: column;
       .post__item {
         width: 100%;
         .post__img {
-          width: 50%;
+          width: 33%;
         }
       }
     }
   }
 }
-
-@media (max-width: 767px) {
+@media (max-width: 575px) {
   .posts {
+    margin-top: 38px;
+    .post__title {
+      font-size: 14px;
+    }
     .recent__posts {
+      row-gap: 28px;
+      margin-top: 23px;
       .post__item {
         flex-direction: column;
+        .post__img {
+          width: 100%;
+        }
         .post__content {
+          margin-top: 11px;
           margin-left: 0;
+        
+          .post__header {
+            font-size: 14px;
+          }
+          .post__info {
+            font-size: 11px;
+          }
           .text {
             display: none;
           }
@@ -70,15 +85,4 @@
       }
     }
   }
-}
-
-@media (max-width: 1200px) {
-  .posts {
-    .recent__posts {
-      .post__img{
-        width: 100%;
-      }
-    }
-  }
-
 }

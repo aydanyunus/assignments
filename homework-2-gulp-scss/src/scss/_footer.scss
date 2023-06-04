@@ -16,6 +16,9 @@
       color: $lightGray;
       @include text(16px, $fw-normal, 28px);
     }
+    .footer__text--mobile {
+      display: none;
+    }
     .icons {
       margin-top: 37px;
       &__list {
@@ -82,10 +85,40 @@
   }
 }
 
-@media  (max-width: 768px) {
-  .detail-info {
-    span {
-      display: block;
+@media (max-width: 991px) {
+  .footer {
+    &__wrapper {
+      padding-bottom: 70px;
+      padding-top: 66px;
+    }
+  }
+}
+@media (max-width: 575px) {
+  .footer {
+    &__wrapper {
+      padding-top: 38px;
+      padding-bottom: 47px;
+      .footer__title {
+        font-size: 14px;
+      }
+      .footer__text {
+        display: none;
+      }
+      .footer__text--mobile {
+        display: block;
+        line-height: 20px;
+        font-size: 12px;
+      }
+      .contact-detail {
+        .detail-info {
+          font-size: 14px;
+          line-height: 24px;
+          span {
+            display: block;
+          }
+        }
+      }
+      
     }
   }
 }

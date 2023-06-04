@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
 html {
   box-sizing: border-box;
@@ -20,8 +20,27 @@ body {
 }
 
 .container {
-  max-width: 80%;
+  max-width: 1170px;
   margin: 0 auto;
+  padding: 0 25px;
+}
+
+@media (min-width: 320px) and (max-width: 575px) {
+  .container {
+    max-width: 320px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991px) {
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+  .container {
+    max-width: 1170px;
+  }
 }
 
 a,

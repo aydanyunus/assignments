@@ -1,8 +1,8 @@
 .shots {
   background-color: #e5e5e5;
-  margin-top: 37px;
+  margin-top: 69px;
   padding-top: 47px;
-  padding-bottom: 49px;
+  padding-bottom: 50px;
   &__header {
     display: flex;
     align-items: center;
@@ -13,6 +13,9 @@
       @include text(16px, $fw-bold, 22px);
       color: $titleColor;
     }
+    .lastest-shots--xs {
+      display: none
+    }
     .go-to-page {
       @include text(13px, $fw-bold, 22px);
       color: $titleColor;
@@ -22,7 +25,6 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    justify-content: space-between;
     &__item {
       img {
         max-width: 100%;
@@ -32,31 +34,51 @@
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 991px) {
   .shots {
-    .go-to-page {
-      display: none;
+    &__header {
+      margin-bottom: 35px;
     }
     .instagram-shots {
       .instagram-shots__item {
         &:last-child {
-          display: flex;
-          flex: 0;
+          display: none;
         }
       }
     }
   }
 }
-
-@media (max-width: 767px) {
+@media (max-width: 575px) {
   .shots {
+    background: rgba(0, 0, 0, 0.0001);
+    padding-top: 39px;
+    padding-bottom: 42px;
+    &__header {
+      margin-bottom: 13px;
+      .lastest-shots {
+        font-size: 14px;
+        display: none;
+      }
+      .lastest-shots--xs {
+        display: block;
+      }
+      .go-to-page {
+        display: none;
+      }
+    }
     .instagram-shots {
       .instagram-shots__item {
         &:not(:first-child) {
-          display: flex;
-          flex: 0;
+          display: none;
         }
       }
+    }
+  }
+}
+@media (max-width: 320px) {
+  .shots {
+    &__header {
+      margin-bottom: 13px;
     }
   }
 }
