@@ -1,0 +1,10 @@
+Questions:
+
+1. Explain in your own words how you understand prototypical inheritance works in JavaScript.
+2. Why is it necessary to call super() in the constructor of a child class?
+
+
+Answers: 
+
+1. Prototypical inheritance refers to the ability to access object properties from another object. We achieve inheritance with the help of prototype chaining. In JavaScript, all objects have a hidden Prototype property that’s link to either another object or null. Whenever you access a property or method of an object in JavaScript, it first checks if the property is available inside the object. If not it checks its prototype object. If it is there you get the value of the property. Otherwise, it will check if the property exists in the prototype’s prototype, if not then again and so on until the end of the chain is reached (which is null).
+2. The super() method refers to the parent class. By calling super() in the constructor of a child class we are calling the parent's constructor method and getting access to the parent class's properties and methods, and initializing them in subclass.
