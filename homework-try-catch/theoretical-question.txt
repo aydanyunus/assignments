@@ -1,0 +1,7 @@
+Question:
+Provide a few examples of when it is appropriate to use the try...catch construct in code.
+
+Answer:
+The try..catch construct allows you to handle errors during code execution.
+It is appropriate to use try-catch in portions of your code where you suspect errors will occur that are completely beyond your own control. Or when you want
+to hide errors from the user, or any time you want to produce custom error messages.
