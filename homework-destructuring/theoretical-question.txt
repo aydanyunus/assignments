@@ -1,0 +1,5 @@
+Question:
+Explain in your own words how you understand what destructuring is and why it is needed
+
+Answer:
+Destructuring is used for extracting values from arrays and objects and assigning them to variables in a more concise way and in a single statement. Destructuring improves code readability and simplifies data extraction. It allows us to extract multiple properties simultaneously, specify default values for variables in case the extracted value is undefined.
