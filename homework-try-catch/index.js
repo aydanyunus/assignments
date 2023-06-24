@@ -8,7 +8,6 @@ const books = [
         author: "Susanna Clarke",
         name: "Jonathan Strange & Mr Norrell",
     },
-    
     {
         name: "Design. A Book for Non-Designers.",
         price: 70
@@ -35,22 +34,41 @@ const list = document.createElement('ul');
 div.appendChild(list);
 
 
-books.forEach((book, index) => {
-    try {
-        if (!book.hasOwnProperty('author')) {
-            throw new Error(`author property is missing in the object. Array index: "${index}".`)
-        }
-        if (!book.hasOwnProperty('name')) {
-            throw new Error(`name property is missing in the object. Array index: "${index}".`)
-        }
-        if (!book.hasOwnProperty('price')) {
-            throw new Error(`price property is missing in the object. Array index: "${index}".`)
-        }
-        const listItem = document.createElement('li');
-        list.appendChild(listItem);
-        listItem.textContent = `${book.name} - ${book.author} (price: ${book.price}$)`
+let bookFields = [];
 
-    } catch (err) {
-        console.log(err.message)
-    }
-})
+for (let field of books) {
+    let props = Object.keys(field);
+    props.forEach((prop) => {
+        if (!bookFields.includes(prop)) {
+            bookFields.push(prop);
+        }
+    })
+}
+
+
+const validateBook = (book) => {
+
+    bookFields.find((propName) => {
+        if (!Object.keys(book).includes(propName)) {
+            throw new Error(`${propName} property is missing in the object. Array index: "${books.indexOf(book)}".`)
+        }
+    })
+}
+
+
+const createBookList = () => {
+
+    books.map((book) => {
+        try {
+            validateBook(book)
+            const listItem = document.createElement('li');
+            list.appendChild(listItem);
+            listItem.textContent = `${book.name} - ${book.author} (price: ${book.price}$)`
+        } catch (err) {
+            console.log(err.message)
+        }
+    })
+
+}
+
+createBookList()
