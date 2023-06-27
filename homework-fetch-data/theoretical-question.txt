@@ -1,0 +1,5 @@
+Question:
+Explain in your own words what AJAX is and how it is useful in JavaScript development.
+
+Answer:
+AJAX stands for Asynchronous JavaScript and XML. With the help of AJAX, we can send and receive data without refreshing the web page. It uses fewer resources to load changes in a specific part instead of reloading the entire page.
