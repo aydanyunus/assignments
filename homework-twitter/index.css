@@ -1,0 +1,70 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #eff3f4;
+  width: 50%;
+  margin: 20px auto;
+  padding: 16px;
+  border-radius: 5px;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.2),
+    0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12);
+}
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.card-header .profile {
+  display: flex;
+  justify-content: space-between;
+}
+.profile .profile-pic {
+  border-radius: 50%;
+  border: 1px solid #000;
+  width: 50px;
+  height: 50px;
+  background: #14171a;
+}
+.profile .user-info {
+  color: #14171a;
+  font-size: 16px;
+  padding-left: 16px;
+}
+.name {
+  font-size: 18px;
+}
+.username,
+.email {
+  color: #aab8c2;
+}
+.card-header .options .btn-delete {
+  border: none;
+  border-radius: 3px;
+  font-weight: 700;
+  background: red;
+  color: #fff;
+  width: 70px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.card-body {
+  margin-top: 16px;
+  color: #14171a;
+}
+.card-body .title {
+  font-size: 26px;
+  font-weight: 400;
+}
+.card-body .text {
+  font-size: 24px;
+  margin-top: 10px;
+}
