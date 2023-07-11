@@ -1,0 +1,5 @@
+Question:
+Explain in your own words how you understand the concept of asynchronous programming in JavaScript.
+
+Answer:
+In JavaScript, every line of code is executed one after the other, and each task must wait for the previous one to be completed before moving to the next. Asynchronous programming allows multiple events to occur simultaneously, and multiple tasks can execute at the same time while tasks in the background finish.
