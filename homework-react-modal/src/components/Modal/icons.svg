@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+  <g id="cross" transform="translate(-567 -68)">
+    <g id="cross-2" data-name="cross" transform="translate(461.611 -313.17)">
+      <path id="_11" data-name="11" d="M125.389,400.37l-9.2-9.2,9.2-9.2-.8-.8-9.2,9.2-9.2-9.2-.8.8,9.2,9.2-9.2,9.2.8.8,9.2-9.2,9.2,9.2Z" fill="#333"/>
+    </g>
+    <path id="Color_Overlay" data-name="Color Overlay" d="M577,78.8,567.8,88l-.8-.8,9.2-9.2L567,68.8l.8-.8,9.2,9.2,9.2-9.2.8.8L577.8,78l9.2,9.2-.8.8Z" fill="#fff"/>
+  </g>
+</svg>
