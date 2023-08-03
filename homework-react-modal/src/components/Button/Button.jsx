@@ -3,9 +3,9 @@ import "./button.scss";
 
 class Button extends Component {
   render() {
-    const { backgroundColor, text, onClick } = this.props;
+    const { backgroundColor, text, onClick, dataModal } = this.props;
     return (
-      <button style={{ backgroundColor: backgroundColor }} onClick={onClick}>
+      <button style={{ backgroundColor: backgroundColor }} data-modal={dataModal} onClick={onClick}>
         {text}
       </button>
     );

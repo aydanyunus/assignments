@@ -8,24 +8,60 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      isFirstModalOpen: false,
-      isSecModalOpen: false
+      isOpen: false,
+      data: {}
     }
   }
-  handleOpenFirstModal = () => {
-    this.setState((prevState) => ({ isFirstModalOpen: prevState.isFirstModalOpen = true, isSecModalOpen: prevState.isSecModalOpen = false }));
+
+  modalData = [
+    {
+      id: 'modal1',
+      header: 'Do you want to delete this file?',
+      closeButton: true,
+      text: "Once you delete this file, it won't be possible to undo this action. Are you sure you want to delete it?",
+      actions: (
+        <>
+          <Button
+            backgroundColor='#b3382c'
+            text='Ok'
+          />
+          <Button
+            backgroundColor='#b3382c'
+            text='Cancel'
+          />
+        </>
+      )
+    },
+    {
+      id: 'modal2',
+      header: 'What is Lorem Ipsum?',
+      closeButton: true,
+      text: "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit...",
+      actions: (
+        <>
+          <Button
+            backgroundColor='#b3382c'
+            text='Submit'
+          />
+          <Button
+            backgroundColor='#b3382c'
+            text='Close'
+          />
+        </>
+      )
+    }
+  ]
+
+  handleOpenModal = (modalId) => {
+    const currentModal = this.modalData.find((modal) => modal.id === modalId);
+    if (currentModal) {
+      this.setState({ isOpen: true, data: currentModal });
+    }
+
   }
 
-  handleOpenSecModal = () => {
-    this.setState((prevState) => ({ isSecModalOpen: prevState.isSecModalOpen = true, isFirstModalOpen: prevState.isFirstModalOpen = false }));
-  }
-
-  handleCloseFirstModal = () => {
-    this.setState((prevState) => ({ isFirstModalOpen: prevState.isFirstModalOpen = false}));
-  }
-
-  handleCloseSecModal = () => {
-    this.setState((prevState) => ({ isSecModalOpen: prevState.isSecModalOpen = false}));
+  handleCloseModal = () => {
+    this.setState({ isOpen: false, data: {} })
   }
 
 
@@ -34,58 +70,24 @@ class App extends Component {
     return (
 
       <div className="App">
-        
+
         <Button
           backgroundColor='#007bff'
           text='Open first modal'
-          onClick={this.handleOpenFirstModal}
+          dataModal='modal1'
+          onClick={(e) => this.handleOpenModal(e.target.dataset.modal)}
         />
         <Button
           backgroundColor='#fa6400'
           text='Open second modal'
-          onClick={this.handleOpenSecModal}
+          dataModal='modal2'
+          onClick={(e) => this.handleOpenModal(e.target.dataset.modal)}
         />
 
-        {this.state.isFirstModalOpen &&
+        {this.state.isOpen &&
           <Modal
-            header='Do you want to delete this file?'
-            closeButton={true}
-            text="Once you delete this file, it won't be possible to undo this action. Are you sure you want to delete it?"
-            actions={
-              <>
-                <Button
-                  backgroundColor='#b3382c'
-                  text='Ok'
-                />
-                <Button
-                  backgroundColor='#b3382c'
-                  text='Cancel'
-                />
-              </>
-            }
-            onClose={this.handleCloseFirstModal}
-          />
-        }
-
-        {this.state.isSecModalOpen &&
-          <Modal
-            header='What is Lorem Ipsum?'
-            closeButton={true}
-            text="Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
-            actions={
-              <>
-                <Button
-                  backgroundColor='#b3382c'
-                  text='Submit'
-                />
-                <Button
-                  backgroundColor='#b3382c'
-                  text='Close'
-                />
-              </>
-            }
-            onClose={this.handleCloseSecModal}
-
+            data={this.state.data}
+            onClose={this.handleCloseModal}
           />
         }
 
@@ -94,8 +96,6 @@ class App extends Component {
     );
   }
 }
-
-
 
 
 export default App;

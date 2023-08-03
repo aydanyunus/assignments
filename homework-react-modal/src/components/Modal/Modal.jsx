@@ -8,15 +8,15 @@ class Modal extends Component {
   };
   
   render() {
-    const { header, closeButton, text, actions, onClose } = this.props;
+    const { data, onClose } = this.props;
 
     return (
       <div className="modal-overlay" onClick={onClose}>
         <div className="modal" onClick={this.handleModalContentClick}>
           <div className="modal-content">
             <div className="modal-header">
-              <h3 className="modal-title">{header}</h3>
-              {closeButton ? (
+              <h3 className="modal-title">{data.header}</h3>
+              {data.closeButton ? (
                 <span className="close-btn" onClick={onClose}>
                   <img src={svg} alt="" />
                 </span>
@@ -25,9 +25,9 @@ class Modal extends Component {
               )}
             </div>
             <div className="modal-body">
-              <p>{text}</p>
+              <p>{data.text}</p>
             </div>
-            <div className="modal-footer">{actions}</div>
+            <div className="modal-footer">{data.actions}</div>
           </div>
         </div>
       </div>
