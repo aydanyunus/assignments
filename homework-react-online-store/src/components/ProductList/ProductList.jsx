@@ -5,7 +5,7 @@ import Product from "../Product/Product";
 
 class ProductList extends Component {
   render() {
-    const { products, onClick, handleFav, favorites } = this.props;
+    const { products, onClick, handleFav, favorites, removeFav } = this.props;
 
     return (
       <div className="products-wrapper">
@@ -16,6 +16,7 @@ class ProductList extends Component {
               product={product}
               onClick={onClick}
               handleFav={handleFav}
+              removeFav={removeFav}
               favorites={favorites}
             />
           );

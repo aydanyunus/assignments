@@ -17,17 +17,11 @@ class Header extends Component {
       isDropdownOpen: !prevState.isDropdownOpen,
     }));
   };
+ 
 
-  handlePrice = (price) => {
-    this.setState((prevState) => ({ total: prevState.total + price }));
-  };
 
   render() {
-    const { cart, favorites, products } = this.props;
-
-    const selectedProduct = products.filter((product) => {
-      return cart.includes(product.sku);
-    });
+    const { cart, favorites, total } = this.props;
 
     return (
       <header className="header">
@@ -45,14 +39,15 @@ class Header extends Component {
               <div className="dropdown-cart">
                 <div className="container">
                   <ul className="dropdown-list">
-                    {selectedProduct.map((product) => {
+                    {cart.map((product) => {
                       return (
-                        <li className="dropdown-item" key={product.sku}>
+                        <li className="dropdown-item" key={product.id}>
                           <div className="cart-item">
                             <div className="cart-item--left">
                               <div className="cart-item-img">
                                 <img src={product.img_path} alt="" />
                               </div>
+
                               <h3 className="cart-item-title">
                                 {product.name}
                               </h3>
@@ -70,7 +65,9 @@ class Header extends Component {
                   </ul>
                   <div className="cart-details">
                     <h3 className="total-cost-title">Total delivery cost: </h3>
-                    <span className="total-price">{this.state.total}</span>
+                    <span className="total-price">
+                      {total + "$"}
+                    </span>
                   </div>
                   <div className="cart-buttons">
                     <button className="cart-btn view-btn">view cart</button>
@@ -97,8 +94,7 @@ Header.propTypes = {
 Header.defaultProps = {
   products: [],
   cart: [],
-  favorites: []
+  favorites: [],
 };
-
 
 export default Header;

@@ -4,17 +4,8 @@ import PropTypes from "prop-types";
 import { FaRegStar, FaStar } from "react-icons/fa";
 
 class Product extends Component {
-  constructor() {
-    super();
-    this.state = {
-      isClicked: false,
-    };
-  }
-  handleClick = () => {
-    this.setState((prevState) => ({ isClicked: (prevState.isClicked = true) }));
-  };
   render() {
-    const { product, onClick, handleFav, favorites } = this.props;
+    const { product, onClick, handleFav, favorites, removeFav } = this.props;
     const isFavorited = favorites.includes(product.sku);
 
     return (
@@ -25,8 +16,7 @@ class Product extends Component {
           <span
             className="fav"
             onClick={() => {
-              handleFav(product.sku);
-              this.handleClick();
+              isFavorited ? removeFav(product.sku) : handleFav(product.sku);
             }}
           >
             {isFavorited ? (
@@ -42,7 +32,7 @@ class Product extends Component {
         </p>
         <div className="product-details">
           <h4 className="product-price">{"$" + product.price}</h4>
-          <button className="btn-add" onClick={() => onClick(product.sku)}>
+          <button className="btn-add" onClick={() => onClick(product)}>
             add to card
           </button>
         </div>
@@ -55,12 +45,12 @@ Product.propTypes = {
   product: PropTypes.object,
   onClick: PropTypes.func,
   handleFav: PropTypes.func,
-  favorites: PropTypes.array
+  favorites: PropTypes.array,
 };
 
-Product.defaultProps ={
+Product.defaultProps = {
   product: {},
-  favorites: []
-}
+  favorites: [],
+};
 
 export default Product;
