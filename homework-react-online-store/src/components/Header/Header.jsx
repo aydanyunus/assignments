@@ -87,14 +87,14 @@ class Header extends Component {
 
 Header.propTypes = {
   cart: PropTypes.array,
-  products: PropTypes.array,
   favorites: PropTypes.array,
+  total: PropTypes.number
 };
 
 Header.defaultProps = {
-  products: [],
   cart: [],
   favorites: [],
+  total: 0
 };
 
 export default Header;

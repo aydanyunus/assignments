@@ -30,7 +30,8 @@ ProductList.propTypes = {
   products: PropTypes.array,
   onClick: PropTypes.func,
   handleFav: PropTypes.func,
-  favorites:  PropTypes.array
+  favorites:  PropTypes.array,
+  removeFav : PropTypes.func
 };
 
 ProductList.defaultProps = {
