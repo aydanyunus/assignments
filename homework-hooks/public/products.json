@@ -1,0 +1,72 @@
+[
+    {
+        "name": "Dune",
+        "price": 25,
+        "img_path": "./imgs/dune.jpg",
+        "sku": 82738273,
+        "color": "#ffffff"
+    },
+    {
+        "name": "I, Robot",
+        "price": 20,
+        "img_path": "./imgs/i-robot.jpg",
+        "sku": 71169910,
+        "color": "#ffffff"
+    },
+    {
+        "name": "Foundation",
+        "price": 15,
+        "img_path": "./imgs/foundation.jpg",
+        "sku": 53630629,
+        "color": "#ffffff"
+    },
+    {
+        "name": "The hitchhiker's guide to the galaxy",
+        "price": 30,
+        "img_path": "./imgs/guide-galaxy.jpg",
+        "sku": 26947051,
+        "color": "#ffffff"
+    },
+    {
+        "name": "Cosmos",
+        "price": 24,
+        "img_path": "./imgs/cosmos.jpg",
+        "sku": 83248163,
+        "color": "#ffffff"
+    },
+    {
+        "name": "A Brief History of Time",
+        "price": 55,
+        "img_path": "./imgs/brief-history-of-time.jpg",
+        "sku": 85596731,
+        "color": "#ffffff"
+    },
+    {
+        "name": "Computer Science Distilled",
+        "price": 35,
+        "img_path": "./imgs/cs-distilled.jpg",
+        "sku": 55169707,
+        "color": "#ffffff"
+    },
+    {
+        "name": "1984",
+        "price": 20,
+        "img_path": "./imgs/1984.jpg",
+        "sku": 43198638,
+        "color": "#ffffff"
+    },
+    {
+        "name": "Eloquent JavaScript",
+        "price": 29,
+        "img_path": "./imgs/eloquent-js.jpg",
+        "sku": 41238638,
+        "color": "#ffffff"
+    },
+    {
+        "name": "2001: A Space Odyssey",
+        "price": 25,
+        "img_path": "./imgs/space-odyssey.jpg",
+        "sku": 12387488,
+        "color": "#ffffff"
+    }  
+]
