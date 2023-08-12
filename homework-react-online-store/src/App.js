@@ -7,7 +7,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { fetchData } from './api';
 
 
-
 class App extends Component {
   constructor() {
     super()
@@ -29,34 +28,36 @@ class App extends Component {
     this.setState((prevState) => ({ isModalOpen: prevState.isModalOpen = false, selectedProductId: prevState.selectedProductId = null }));
   }
 
-  componentDidUpdate() {
-    localStorage.setItem('favorites', JSON.stringify(this.state.favorites));
-    localStorage.setItem('products', JSON.stringify(this.state.products));
-    localStorage.setItem('cart', JSON.stringify(this.state.cart));
-    localStorage.setItem('totalPrice', JSON.stringify(this.state.total));
-
-  }
 
   componentDidMount() {
     fetchData().then((data) => {
-      this.setState({ products: data }); 
+      this.setState({ products: data });
+
+      const localFavorites = JSON.parse(localStorage?.getItem('favorites')) || []
+      const localTotal = JSON.parse(localStorage?.getItem('totalPrice')) || 0
+      const localCart = JSON.parse(localStorage?.getItem('cart')) || []
+     
+      this.setState({
+        favorites: localFavorites,
+        cart: localCart,
+        total: localTotal,
+      });
+  
     });
-    const favorites = localStorage.getItem('favorites');
-    if (favorites) {
-      this.setState({ favorites: JSON.parse(favorites) });
+  }
+
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.favorites.length !== this.state.favorites.length) {
+      localStorage.setItem('favorites', JSON.stringify(this.state.favorites))
     }
-    const products = localStorage.getItem('products');
-    if (products) {
-      this.setState({ products: JSON.parse(products) });
+    if (prevState.cart.length !== this.state.cart.length) {
+      localStorage.setItem('cart', JSON.stringify(this.state.cart));
     }
-    const cart = localStorage.getItem('cart');
-    if (cart) {
-      this.setState({ cart: JSON.parse(cart) });
+    if (prevState.total !== this.state.total) {
+      localStorage.setItem('totalPrice', JSON.stringify(this.state.total));
     }
-    const total = localStorage.getItem('totalPrice')
-    if (total) {
-      this.setState({ total: JSON.parse(total) })
-    }
+    
   }
 
 
@@ -84,7 +85,6 @@ class App extends Component {
       0
     );
     this.setState({ total: totalPrice });
-    localStorage.setItem('totalPrice', this.state.total)
   };
 
   handleFav = (productId) => {
