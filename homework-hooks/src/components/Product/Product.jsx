@@ -2,7 +2,15 @@ import "./product.scss";
 import PropTypes from "prop-types";
 import { FaRegStar, FaStar } from "react-icons/fa";
 
-const Product = ({ product, onClick, handleFav, favorites, removeFav }) => {
+const Product = ({
+  product,
+  onClick,
+  handleFav,
+  favorites,
+  removeFav,
+  isInCart,
+  handleAction
+}) => {
   const isFavorited = favorites.includes(product.sku);
 
   return (
@@ -29,9 +37,23 @@ const Product = ({ product, onClick, handleFav, favorites, removeFav }) => {
       </p>
       <div className="product-details">
         <h4 className="product-price">{"$" + product.price}</h4>
-        <button className="btn-add" onClick={() => onClick(product, "modal1")}>
-          add to card
-        </button>
+        {isInCart ? (
+          <button
+            className="btn-delete"
+            onClick={() => {
+              handleAction(product.id, "remove");
+            }}
+          >
+            remove
+          </button>
+        ) : (
+          <button
+            className="btn-add"
+            onClick={() => onClick(product, "modal1")}
+          >
+            add to card
+          </button>
+        )}
       </div>
     </div>
   );
@@ -42,7 +64,7 @@ Product.propTypes = {
   onClick: PropTypes.func,
   handleFav: PropTypes.func,
   favorites: PropTypes.array,
-  removeFav: PropTypes.func
+  removeFav: PropTypes.func,
 };
 
 Product.defaultProps = {

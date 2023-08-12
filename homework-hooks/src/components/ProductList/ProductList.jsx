@@ -2,7 +2,7 @@ import "./product-list.scss";
 import PropTypes from "prop-types";
 import Product from "../Product/Product";
 
-const ProductList = ({ products, onClick, handleFav, favorites, removeFav }) => {
+const ProductList = ({ products, onClick, handleFav, favorites, removeFav, isInCart, handleAction }) => {
   return (
     <div className="products-wrapper">
       {products.map((product) => {
@@ -14,6 +14,8 @@ const ProductList = ({ products, onClick, handleFav, favorites, removeFav }) => 
             handleFav={handleFav}
             favorites={favorites}
             removeFav={removeFav}
+            isInCart={isInCart}
+            handleAction={handleAction}
           />
         );
       })}

@@ -1,6 +1,6 @@
 import ProductList from "../components/ProductList/ProductList";
 
-const Cart = ({ products, onClick, handleFav, removeFav, favorites }) => {
+const Cart = ({ products, onClick, handleFav, removeFav, favorites, handleAction }) => {
   
 
   return (
@@ -11,6 +11,8 @@ const Cart = ({ products, onClick, handleFav, removeFav, favorites }) => {
         handleFav={handleFav}
         favorites={favorites}
         removeFav={removeFav}
+        isInCart ={true}
+        handleAction={handleAction}
       />
     </div>
   );

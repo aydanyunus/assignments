@@ -10,47 +10,41 @@ import Cart from './pages/Cart';
 import Home from './pages/Home';
 
 
+
 const App = () => {
+
+  const getFromLocal = (key) => {
+    const localData = JSON.parse(localStorage?.getItem(key));
+    return localData || [];
+  }
+
+
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
-  const [favorites, setFavorites] = useState([]);
+  const [cart, setCart] = useState(getFromLocal('cart'));
+  const [favorites, setFavorites] = useState(getFromLocal('favorites'));
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalData, setModalData] = useState('');
   const [selectedProductId, setSelectProductId] = useState(null);
   const [total, setTotal] = useState(0);
   const [actionType, setActionType] = useState('')
 
-
-  useEffect(() => {
-    const favorites = localStorage.getItem('favorites');
-    if (favorites) {
-      setFavorites(JSON.parse(favorites));
-    }
-
-    const products = localStorage.getItem('products');
-    if (products) {
-      setProducts(JSON.parse(products));
-    }
-
-    const cart = localStorage.getItem('cart');
-    if (cart) {
-      setCart(JSON.parse(cart));
-    }
-
-    const total = localStorage.getItem('totalPrice');
-    if (total) {
-      setTotal(JSON.parse(total));
-    }
-
-  }, []);
-
-
+  
   useEffect(() => {
     fetchData().then(data => {
       setProducts(data)
-      localStorage.setItem('products', JSON.stringify(data));
     })
   }, []);
+
+
+  useEffect(() => {
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }, [favorites])
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart])
+
+
 
 
 
@@ -96,7 +90,6 @@ const App = () => {
 
     setCart(updatedCart);
     handleCloseModal();
-    localStorage.setItem("cart", JSON.stringify(updatedCart));
   };
 
 
@@ -104,7 +97,6 @@ const App = () => {
     if (!favorites.includes(productId)) {
       const newFavs = [...favorites, productId];
       setFavorites(newFavs);
-      localStorage.setItem("favorites", JSON.stringify(newFavs));
     }
   };
 
@@ -112,14 +104,12 @@ const App = () => {
   const removeFav = (productId) => {
     const updatedFav = favorites.filter((id) => id !== productId)
     setFavorites(updatedFav);
-    localStorage.setItem("favorites", JSON.stringify(updatedFav));
 
   }
 
   const handlePrice = useCallback(() => {
     const totalPrice = cart.reduce((total, product) => total + product.price, 0);
     setTotal(totalPrice);
-    localStorage.setItem('totalPrice', JSON.stringify(totalPrice))
   }, [cart]);
 
   useEffect(() => {
@@ -129,7 +119,6 @@ const App = () => {
   const removeProduct = (id) => {
     const updatedProduct = cart.filter((product) => product.id !== id)
     setCart(updatedProduct);
-    localStorage.setItem("cart", JSON.stringify(updatedProduct));
     handleCloseModal()
   }
 
@@ -156,7 +145,7 @@ const App = () => {
 
       <Routes>
         <Route path='/' element={<Home products={products} onClick={handleOpenModal} handleFav={handleFav} favorites={favorites} removeFav={removeFav} />} />
-        <Route path='/cart' element={<Cart products={cart} onClick={handleOpenModal} handleFav={handleFav} favorites={favorites} removeFav={removeFav} />} />
+        <Route path='/cart' element={<Cart products={cart} onClick={handleOpenModal} handleAction={handleAction} handleFav={handleFav} favorites={favorites} removeFav={removeFav} />} />
         <Route path='/favorites' element={<Favorites products={products} onClick={handleOpenModal} handleFav={handleFav} favorites={favorites} removeFav={removeFav} />} />
       </Routes>
 
