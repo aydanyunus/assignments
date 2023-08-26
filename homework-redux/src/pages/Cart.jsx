@@ -1,18 +1,15 @@
 import ProductList from "../components/ProductList/ProductList";
+import { useSelector } from "react-redux";
 
-const Cart = ({ products, onClick, handleFav, removeFav, favorites, handleAction }) => {
-  
+const Cart = () => {
+  const cart = useSelector((state) => state.cart.cart);
+
 
   return (
     <div className="container">
       <ProductList
-        products={products}
-        onClick={onClick}
-        handleFav={handleFav}
-        favorites={favorites}
-        removeFav={removeFav}
-        isInCart ={true}
-        handleAction={handleAction}
+        products={cart}
+        isInCart={true}
       />
     </div>
   );

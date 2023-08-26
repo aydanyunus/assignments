@@ -1,6 +1,14 @@
 const getFromLocal = (key) => {
-    const localData = JSON.parse(localStorage?.getItem(key));
-    return localData || [];
+    const localData = localStorage.getItem(key);
+
+    try {
+        const parsedData = JSON.parse(localData)
+        return parsedData || [];
+    }
+    catch (e) {
+        return []
+    }
+
 }
 
 const initialState = {
@@ -19,7 +27,7 @@ export const favoritesReducer = (state = initialState, action) => {
                 ...state,
                 favorites: state.favorites.filter((id) => id !== action.payload)
             }
-     
+
         default:
             return state
     }

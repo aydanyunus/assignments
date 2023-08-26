@@ -1,14 +1,15 @@
 import ProductList from "../components/ProductList/ProductList";
+import { useSelector } from "react-redux";
 
-const Home = ({ products, onClick, handleFav, favorites, removeFav }) => {
+
+
+const Home = () => {
+  const products = useSelector((state) => state.products.products);
+
   return (
     <div className="container">
       <ProductList
-        products={products}
-        onClick={onClick}
-        handleFav={handleFav}
-        favorites={favorites}
-        removeFav={removeFav}
+        products={products}    
       />
     </div>
   );

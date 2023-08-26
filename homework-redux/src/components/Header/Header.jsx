@@ -1,16 +1,73 @@
-import { useState } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import PropTypes from "prop-types";
 import { FaCartPlus } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setTotal } from "../../store/actions/cartActions";
+import { modalContent } from "../../utils/modalContent";
+import { setModal } from "../../store/actions/modalActions";
 import "./header.scss";
 
-const Header = ({ cart, favorites, total, handleAction }) => {
+const Header = () => {
+  const favorites = useSelector((state) => state.favorites.favorites);
+  const cart = useSelector((state) => state.cart.cart);
+  const total = useSelector((state) => state.cart.total);
+  const dropdownContentRef = useRef(null)
+  const cartRef = useRef(null);
+  const dispatch = useDispatch();
+
+  const handlePrice = useCallback(() => {
+    const totalPrice = cart.reduce(
+      (total, product) => total + product.price,
+      0
+    );
+    dispatch(setTotal(totalPrice));
+  }, [cart, dispatch]);
+
+  useEffect(() => {
+    handlePrice();
+  }, [cart, handlePrice]);
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleDropdown = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
+
+  const openModal = (productId, modalId) => {
+    const currentModal = modalContent.find((modal) => modal.id === modalId);
+    if (currentModal) {
+      dispatch(setModal(true, currentModal, productId));
+    }
+  };
+
+  const handleOutsideClick = (e) => {
+    if (
+      dropdownContentRef.current &&
+      !dropdownContentRef.current.contains(e.target) &&
+      cartRef.current &&
+      !cartRef.current.contains(e.target)
+    ) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleOutsideClick);
+
+    return () => {
+      document.removeEventListener("click", handleOutsideClick);
+    };
+  }, []);
 
   return (
     <header className="header">
@@ -26,12 +83,16 @@ const Header = ({ cart, favorites, total, handleAction }) => {
             favorites ({favorites.length})
           </div>
 
-          <button className="shopping-cart" onClick={handleDropdown}>
+          <button
+            className="shopping-cart"
+            onClick={handleDropdown}
+            ref={cartRef}
+          >
             <FaCartPlus />
             cart ({cart.length && cart.length})
           </button>
           {isDropdownOpen && (
-            <div className="dropdown-cart">
+            <div className="dropdown-cart" ref={dropdownContentRef}>
               <div className="container">
                 <ul className="dropdown-list">
                   {cart.map((product) => {
@@ -52,7 +113,7 @@ const Header = ({ cart, favorites, total, handleAction }) => {
                             <button
                               className="btn-delete"
                               onClick={() => {
-                                handleAction(product.id, "remove");
+                                openModal(product.id, "modal2");
                               }}
                             >
                               <AiOutlineClose />
@@ -67,12 +128,6 @@ const Header = ({ cart, favorites, total, handleAction }) => {
                   <h3 className="total-cost-title">Total delivery cost: </h3>
                   <span className="total-price"> {total + "$"}</span>
                 </div>
-                <div className="cart-buttons">
-                  <button className="cart-btn view-btn">view cart</button>
-                  <button className="cart-btn checkout-btn">
-                    Proceed to Checkout
-                  </button>
-                </div>
               </div>
             </div>
           )}
@@ -85,14 +140,14 @@ const Header = ({ cart, favorites, total, handleAction }) => {
 Header.propTypes = {
   cart: PropTypes.array,
   favorites: PropTypes.array,
-  total:PropTypes.number,
-  handleAction: PropTypes.func
+  total: PropTypes.number,
+  handleAction: PropTypes.func,
 };
 
 Header.defaultProps = {
   cart: [],
   favorites: [],
-  total: 0
+  total: 0,
 };
 
 export default Header;
