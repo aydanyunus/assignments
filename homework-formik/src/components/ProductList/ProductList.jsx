@@ -2,7 +2,7 @@ import "./product-list.scss";
 import PropTypes from "prop-types";
 import Product from "../Product/Product";
 
-const ProductList = ({ products, onClick, handleFav, favorites, removeFav, handleAction, isInCart }) => {
+const ProductList = ({ products, isInCart }) => {
   return (
     <div className="products-wrapper">
       {products.map((product) => {
@@ -10,12 +10,7 @@ const ProductList = ({ products, onClick, handleFav, favorites, removeFav, handl
           <Product
             key={product.id ? product.id : product.sku}
             product={product}
-            onClick={onClick}
-            handleFav={handleFav}
-            favorites={favorites}
-            removeFav={removeFav}
             isInCart={isInCart}
-            handleAction={handleAction}
           />
         );
       })}

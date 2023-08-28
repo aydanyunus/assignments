@@ -1,33 +1,27 @@
-import UserForm from "../components/Form/Form";
 import ProductList from "../components/ProductList/ProductList";
+import { useSelector } from "react-redux";
+import UserForm from "../components/Form/Form";
 
-const Cart = ({
-  products,
-  onClick,
-  handleFav,
-  removeFav,
-  favorites,
-  handleAction,
-}) => {
+const Cart = () => {
+  const cart = useSelector((state) => state.cart.cart);
+
   return (
     <div className="container">
-      {products.length ? (
-        <>
-          <ProductList
-            products={products}
-            onClick={onClick}
-            handleFav={handleFav}
-            favorites={favorites}
-            removeFav={removeFav}
-            isInCart={true}
-            handleAction={handleAction}
-          />
-          <h1 className="checkout-title">Proceed to checkout</h1>
-          <UserForm products={products} />
-        </>
-      ) : (
-        <h1 className="no-items-title">No items added to cart</h1>
-      )}
+      <div className="card-wrapper">
+        {cart.length ? (
+          <>
+            <ProductList products={cart} isInCart={true} />
+           
+            <div className="form-wrapper">
+              <h1 className="checkout-title">Proceed to checkout</h1>
+              <UserForm />
+            </div>
+            
+          </>
+        ) : (
+          <h1 className="no-items-title">No items added to cart</h1>
+        )}
+      </div>
     </div>
   );
 };

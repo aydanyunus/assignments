@@ -1,17 +1,13 @@
 import ProductList from "../components/ProductList/ProductList";
+import { useSelector } from "react-redux";
 
-const Favorites = ({ products, onClick, handleFav, favorites, removeFav }) => {
-  const favoriteProducts = products.filter(product => favorites.includes(product.sku));
+const Favorites = () => {
+  const favorites = useSelector((state) => state.favorites.favorites);
+
 
   return (
     <div className="container">
-      <ProductList
-        products={favoriteProducts}
-        onClick={onClick}
-        handleFav={handleFav}
-        favorites={favorites}
-        removeFav={removeFav}
-      />
+      <ProductList products={favorites} />
     </div>
   );
 };

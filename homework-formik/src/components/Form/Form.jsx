@@ -2,11 +2,13 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { SignupSchema } from "./Validation";
 import "./form.scss";
-import { useDispatch } from "react-redux";
-import { clearCart } from "../../actions/index";
+import { useDispatch, useSelector } from "react-redux";
+import { clearCart } from "../../store/actions/cartActions";
 
-const UserForm = ({ products }) => {
+const UserForm = () => {
   const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart.cart);
+
 
   return (
     <div>
@@ -21,7 +23,7 @@ const UserForm = ({ products }) => {
         validationSchema={SignupSchema}
         onSubmit={(values) => {
           console.log(values);
-          console.log(products);
+          console.log(cart);
           dispatch(clearCart());
         }}
       >
