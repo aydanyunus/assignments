@@ -1,0 +1,38 @@
+.products-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-gap: 20px;
+}
+.product-wrapper-list {
+  width: 100%;
+  .product-item {
+    max-width: 600px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    img {
+      display: block;
+      margin: 0 auto;
+      object-fit: cover;
+    }
+  }
+}
+
+.view {
+  display: flex;
+  margin-bottom: 20px;
+  .btn-view {
+    color: #fff;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 3px;
+    cursor: pointer;
+    text-transform: capitalize;
+    background: #1e1e20;
+    text-align: center;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center ;
+  }
+
+}

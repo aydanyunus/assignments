@@ -1,0 +1,49 @@
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+}
+
+input:focus {
+  outline: none;
+}
+
+label {
+  font-weight: 400;
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.btn-checkout {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.btn-checkout:hover {
+  background-color: #2980b9;
+}
+
+.error-message {
+  margin-bottom: 15px;
+  color: #db1414;
+  font-weight: 400;
+}
+
+.checkout-title {
+  margin-bottom: 20px;
+  text-align: center;
+}
