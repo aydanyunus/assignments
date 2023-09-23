@@ -1,9 +1,9 @@
 import ProductList from "../components/ProductList/ProductList";
 import { useSelector } from "react-redux";
 import { BsFillGrid3X3GapFill, BsList } from "react-icons/bs";
-import { createContext, useState } from "react";
+import {  useState } from "react";
+import { SwitchContext } from "../context/SwitchContext";
 
-export const SwitchContext = createContext(null);
 
 const Home = () => {
   const products = useSelector((state) => state.products.products);

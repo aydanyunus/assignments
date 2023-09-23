@@ -2,7 +2,7 @@ import "./product-list.scss";
 import PropTypes from "prop-types";
 import Product from "../Product/Product";
 import { useContext } from "react";
-import { SwitchContext } from "../../pages/Home";
+import { SwitchContext } from "../../context/SwitchContext";
 
 const ProductList = ({ products, isInCart }) => {
   const currentView = useContext(SwitchContext);
