@@ -1,16 +1,14 @@
 import ProductList from "../components/ProductList/ProductList";
 import { useSelector } from "react-redux";
 import { BsFillGrid3X3GapFill, BsList } from "react-icons/bs";
-import {  useState } from "react";
 import { SwitchContext } from "../context/SwitchContext";
-
+import { useContext } from "react";
 
 const Home = () => {
   const products = useSelector((state) => state.products.products);
-  const [currentView, setCurrentView] = useState("grid");
+  const { currentView, setCurrentView } = useContext(SwitchContext);
 
   return (
-    <SwitchContext.Provider value={currentView}>
       <div className="container">
         <div className="view">
           <button
@@ -18,14 +16,13 @@ const Home = () => {
             onClick={() =>
               setCurrentView((prev) => (prev === "grid" ? "list" : "grid"))
             }
-            data-testid='grid-btn'
+            data-testid="grid-btn"
           >
-            {currentView === "grid" ?  <BsList /> : <BsFillGrid3X3GapFill />}
+            {currentView === "grid" ? <BsList /> : <BsFillGrid3X3GapFill />}
           </button>
         </div>
-        <ProductList products={products} />
+        <ProductList currentView={currentView} products={products} />
       </div>
-    </SwitchContext.Provider>
   );
 };
 
