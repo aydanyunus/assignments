@@ -43,12 +43,15 @@ export class Card {
   }
 
   getBalance(currency: CurrencyEnum): number {
-    let total = 0;
-    this.transactions.forEach((transaction) => {
-      if (transaction.currency === currency) {
-        total += transaction.amount;
-      }
-    });
+    let total = this.transactions.reduce(
+      (sum: number, transaction: Transaction) => {
+        if (transaction.currency === currency) {
+          sum += transaction.amount;
+        }
+        return sum;
+      },
+      0
+    );
     return total;
   }
 }

@@ -33,12 +33,12 @@ export class Card {
         return this.transactions.find((transaction) => transaction.id === id);
     }
     getBalance(currency) {
-        let total = 0;
-        this.transactions.forEach((transaction) => {
+        let total = this.transactions.reduce((sum, transaction) => {
             if (transaction.currency === currency) {
-                total += transaction.amount;
+                sum += transaction.amount;
             }
-        });
+            return sum;
+        }, 0);
         return total;
     }
 }
