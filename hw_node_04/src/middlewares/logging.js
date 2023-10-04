@@ -1,6 +1,7 @@
 const loggingMiddleware = (req, res, next) => {
     const {method, url, query, body} = req;
-    console.log(method, url, query, body)
+    const logMsg = `${method} ${url} query: ${JSON.stringify(query)} body:${JSON.stringify(body)}`
+    console.log(logMsg)
     next()
 }
 
