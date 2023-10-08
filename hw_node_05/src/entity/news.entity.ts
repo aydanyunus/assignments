@@ -1,5 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from "typeorm";
-import { Users } from "./users.entity.ts";
+import { User } from "./users.entity.ts";
 
 @Entity()
 export class News {
@@ -14,7 +14,7 @@ export class News {
   @Column()
   authorId: number; 
   
-  @ManyToOne(() => Users)
+  @ManyToOne(() => User)
   @JoinColumn({ name: "authorId" })
-  author: Users;
+  author: User;
 }
