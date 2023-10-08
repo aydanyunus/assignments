@@ -1,7 +1,11 @@
 import { AppDataSource } from "../data-source.ts";
 import { News } from "../entity/news.entity.ts";
 
-
+interface INews {
+  title: string;
+  text: string;
+  authodId: number;
+}
 
 const getNews = async ({ page, size }) => {
   const news = await AppDataSource.getRepository(News).find();
@@ -17,13 +21,19 @@ const getNewsByID = async (id: number) => {
   return news;
 };
 
-const addNews = async (body) => {
-  const newPost = await AppDataSource.getRepository(News).create(body);
-    const results = await AppDataSource.getRepository(News).save(newPost)
-    return results
-}
+const addNews = async (body: INews) => {
+  try {
+    const newPost = await AppDataSource.getRepository(News).create(body);
+    const results = await AppDataSource.getRepository(News).save(newPost);
 
-const editNews = async (id: number, body) => {
+    return results;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+const editNews = async (id: number, body: INews) => {
   const editedNews = await AppDataSource.getRepository(News).findOneBy({
     id,
   });

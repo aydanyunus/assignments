@@ -26,7 +26,6 @@ newsRouter.get("/:id", async (req: Request, res: Response) => {
   }
 });
 
-// post not working
 newsRouter.post("/", async (req: Request, res: Response) => {
   try {
     const newPost = await newsService.addNews(req.body);
