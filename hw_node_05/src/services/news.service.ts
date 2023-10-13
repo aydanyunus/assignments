@@ -7,8 +7,10 @@ interface INews {
   authodId: number;
 }
 
+const newsRepository = AppDataSource.getRepository(News);
+
 const getNews = async ({ page, size }) => {
-  const news = await AppDataSource.getRepository(News).find();
+  const news = await newsRepository.find();
 
   const startIndex = (page - 1) * size;
   const endIndex = page * size;
@@ -17,14 +19,14 @@ const getNews = async ({ page, size }) => {
 };
 
 const getNewsByID = async (id: number) => {
-  const news = await AppDataSource.getRepository(News).findOneBy({ id });
+  const news = await newsRepository.findOneBy({ id });
   return news;
 };
 
 const addNews = async (body: INews) => {
   try {
-    const newPost = await AppDataSource.getRepository(News).create(body);
-    const results = await AppDataSource.getRepository(News).save(newPost);
+    const newPost = await newsRepository.create(body);
+    const results = await newsRepository.save(newPost);
 
     return results;
   } catch (error) {
@@ -34,16 +36,16 @@ const addNews = async (body: INews) => {
 };
 
 const editNews = async (id: number, body: INews) => {
-  const editedNews = await AppDataSource.getRepository(News).findOneBy({
+  const editedNews = await newsRepository.findOneBy({
     id,
   });
-  AppDataSource.getRepository(News).merge(editedNews, body);
-  const result = await AppDataSource.getRepository(News).save(editedNews);
+  newsRepository.merge(editedNews, body);
+  const result = await newsRepository.save(editedNews);
   return result;
 };
 
 const deleteNews = async (id: number) => {
-  const results = await AppDataSource.getRepository(News).delete(id);
+  const results = await newsRepository.delete(id);
   return results;
 };
 

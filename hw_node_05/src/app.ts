@@ -1,17 +1,25 @@
-import  express from "express";
+import express from "express";
 import { AppDataSource } from "./data-source.ts";
 import dotenv from "dotenv";
 dotenv.config();
 import loggingMiddleware from "./middlewares/logging.ts";
 import newsRouter from "./routes/news.route.ts";
 
-AppDataSource.initialize()
-  .then(() => {
-    console.log("connection has established...");
-  })
-  .catch((err) => {
-    console.log(err, "there's an error with connection. Fix it!");
-  });
+const initApp = async () => {
+  try {
+    await AppDataSource.initialize()
+      .then(() => {
+        console.log("Connection has established...");
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  } catch (err) {
+    console.error(err, "There's an error with the connection. Fix it!");
+  }
+};
+
+initApp();
 
 const app = express();
 
