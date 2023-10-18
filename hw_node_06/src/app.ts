@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import loggingMiddleware from "./middlewares/logging.ts";
 import newsRouter from "./routes/news.route.ts";
+import userRouter from "./routes/user.route.ts";
 
 const initApp = async () => {
   try {
@@ -26,6 +27,7 @@ const app = express();
 app.use(express.json());
 app.use(loggingMiddleware);
 app.use("/api/newsposts", newsRouter);
+app.use("/auth", userRouter);
 
 const port = process.env.PORT;
 
