@@ -1,6 +1,8 @@
 import { Router, Request, Response } from "express";
 import { User } from "../entity/users.entity.ts";
 import bycrypt from "bcrypt";
+import validator from 'validator';
+
 
 const userRouter = Router();
 
@@ -15,15 +17,23 @@ userRouter.post("/register", async (req: Request, res: Response) => {
     if (!username || !email || !password || !confirmPassword) {
       return res.status(400).json({ message: `please enter credentials` });
     }
+    
+    if (!validator.isEmail(email)) {
+      return res.status(400).json({ message: `Invalid email format` });
+    }
 
     if (password !== confirmPassword) {
       return res.status(400).json({ message: `passwords don't match` });
     }
-    
-    const existingUser = await User.findOne({ where: [{ email }, { username }] });
+
+    const existingUser = await User.findOne({
+      where: [{ email }, { username }],
+    });
 
     if (existingUser) {
-      return res.status(400).json({ message: "User with this email or username already exists" });
+      return res
+        .status(400)
+        .json({ message: "User with this email or username already exists" });
     }
 
     const user = new User();
@@ -33,7 +43,6 @@ userRouter.post("/register", async (req: Request, res: Response) => {
 
     await user.save();
     return res.status(201).json({ message: "Registration successful" });
-
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
   }
