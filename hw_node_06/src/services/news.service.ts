@@ -1,11 +1,7 @@
 import { AppDataSource } from "../data-source.ts";
 import { News } from "../entity/news.entity.ts";
+import { INews } from "../dto/news.dto.ts";
 
-interface INews {
-  title: string;
-  text: string;
-  authodId: number;
-}
 
 const newsRepository = AppDataSource.getRepository(News);
 
