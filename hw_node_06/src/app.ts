@@ -29,13 +29,14 @@ const initApp = async () => {
 const app = express();
 
 app.use(express.json());
+app.use(passport.initialize());
+
 app.use(loggingMiddleware);
 
 
 app.use("/api/newsposts",authenticate, newsRouter);
 app.use("/auth", userRouter);
 
-app.use(passport.initialize());
 
 const port = process.env.PORT;
 

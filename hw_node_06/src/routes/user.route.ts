@@ -21,7 +21,7 @@ userRouter.post("/login", async (req: Request, res: Response, next: NextFunction
     const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, {
       expiresIn: '10h',
     });
-    return res.status(200).json({ message: 'Login successful', token });
+    return res.status(200).json({ message: 'Login successful', token: `Bearer ${token}` });
   })(req, res, next);
 
 });
@@ -63,7 +63,7 @@ userRouter.post("/register", async (req: Request, res: Response) => {
     const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, {
       expiresIn: "10h",
     });
-    return res.status(201).json({ message: "Registration successful", token });
+    return res.status(201).json({ message: "Registration successful", token: `Bearer ${token}` });
   } catch (error) {
     return res.status(500).json({ message: "Internal server error" });
   }
