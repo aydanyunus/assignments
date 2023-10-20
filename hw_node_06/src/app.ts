@@ -6,7 +6,7 @@ import loggingMiddleware from "./middlewares/logging.ts";
 import newsRouter from "./routes/news.route.ts";
 import userRouter from "./routes/user.route.ts";
 import passport from "./passport.ts";
-
+import authenticate from "./middlewares/auth.ts";
 
 const initApp = async () => {
   try {
@@ -31,7 +31,8 @@ const app = express();
 app.use(express.json());
 app.use(loggingMiddleware);
 
-app.use("/api/newsposts", newsRouter);
+
+app.use("/api/newsposts",authenticate, newsRouter);
 app.use("/auth", userRouter);
 
 app.use(passport.initialize());
