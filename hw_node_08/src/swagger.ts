@@ -26,6 +26,17 @@ const doc = {
       bearerAuth: [],
     },
   ],
+  definitions: {
+    User: {
+      username: "newadmin4",
+      email: "newadmin4@gmail.com",
+      password: "123",
+    },
+    NewsPost: {
+      title: "Penguin Chick Hatches at Antarctica Research Station",
+      text: "In the icy wilderness of Antarctica, a penguin chick has hatched at our research station.",
+    },
+  },
 };
 
 const outputFile = "./swagger_output.json";
