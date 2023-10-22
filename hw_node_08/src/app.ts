@@ -7,6 +7,8 @@ import newsRouter from "./routes/news.route.ts";
 import userRouter from "./routes/user.route.ts";
 import passport from "./passport.ts";
 import authenticate from "./middlewares/auth.ts";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from './swagger_output.json' assert { type: 'json' };
 
 const initApp = async () => {
   try {
@@ -29,16 +31,18 @@ const initApp = async () => {
 const app = express();
 
 app.use(express.json());
+const port = process.env.PORT;
+
+
 app.use(passport.initialize());
 
 app.use(loggingMiddleware);
 
 
-app.use("/api/newsposts",authenticate, newsRouter);
+app.use("/api/newsposts", authenticate, newsRouter);
 app.use("/auth", userRouter);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-
-const port = process.env.PORT;
 
 app.listen(port, () => {
   console.log(`server running on ${port}`);
