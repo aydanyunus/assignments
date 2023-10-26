@@ -1,27 +1,30 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { User } from "../entity/users.entity.ts";
-import bcrypt from "bcrypt";
 import validator from "validator";
-import jwt from "jsonwebtoken";
 import passport from "../passport.ts";
 import { IUser } from "../dto/user.dto.ts";
+import { loginUser, registerUser } from "../services/user.service.ts";
 
 
 const userRouter = Router();
 
 userRouter.post("/login", async (req: Request, res: Response, next: NextFunction) => {
-  passport.authenticate('local', (err: Error, user: IUser, info:{ message: string }) => {
+  passport.authenticate('local', async (err: Error, user: IUser, info:{ message: string }) => {
     if (err) {
       return res.status(500).json({ message: 'Internal server error' });
     }
     if (!user) {
       return res.status(401).json({ message: info.message });
     }
+    const {email, password} = req.body
+    try {
 
-    const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, {
-      expiresIn: '10h',
-    });
-    return res.status(200).json({ message: 'Login successful', token: `Bearer ${token}` });
+      const token = await loginUser(email, password);
+      return res.status(200).json({ message: 'Login successful', token: `Bearer ${token}` });
+    } catch (error) {
+      return res.status(401).json({ message: error.message });
+    }
+  
+   
   })(req, res, next);
 
 });
@@ -43,29 +46,15 @@ userRouter.post("/register", async (req: Request, res: Response) => {
       return res.status(400).json({ message: `passwords don't match` });
     }
 
-    const existingUser = await User.findOne({
-      where: [{ email }, { username }],
-    });
+    const token = await registerUser(username, email, password);  
 
-    if (existingUser) {
-      return res
-        .status(400)
-        .json({ message: "User with this email or username already exists" });
+    if (typeof token !== 'string') {
+      return res.status(400).json({ message: token.error });
     }
 
-    const user = new User();
-    user.email = email;
-    user.username = username;
-    user.password = await bcrypt.hash(password, 10);
-
-    await user.save();
-
-    const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, {
-      expiresIn: "10h",
-    });
     return res.status(201).json({ message: "Registration successful", token: `Bearer ${token}` });
   } catch (error) {
-    return res.status(500).json({ message: "Internal server error" });
+    return res.status(500).json({ message: 'Internal server error'});
   }
 });
 
