@@ -7,8 +7,8 @@ import newsRouter from "./routes/news.route.ts";
 import userRouter from "./routes/user.route.ts";
 import passport from "./passport.ts";
 import authenticate from "./middlewares/auth.ts";
-import swaggerUi from "swagger-ui-express";
-import swaggerDocument from './swagger_output.json' assert { type: 'json' };
+import { dirname } from 'path'
+import { fileURLToPath } from "url";
 
 const initApp = async () => {
   try {
@@ -29,16 +29,31 @@ const initApp = async () => {
 })();
 
 const app = express();
-
 app.use(express.json());
 app.use(passport.initialize());
-
 app.use(loggingMiddleware);
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+app.set('view engine', 'ejs'); 
+
+app.use(express.static(__dirname + '/views'));
+
+app.get('/login', (req, res) => {
+  res.render('login');
+});
+app.get('/register', (req, res) => {
+  res.render('register');
+});
+app.get('/news', (req, res) => {
+  res.render('news');
+});
+
 
 
 app.use("/api/newsposts",authenticate, newsRouter);
 app.use("/auth", userRouter);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 
 const port = process.env.PORT;
