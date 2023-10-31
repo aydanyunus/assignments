@@ -65,9 +65,8 @@
             errorMessageElement.classList.remove('hidden')
         } else if (response.ok) {
             console.log('Login Token:', data.token);
-            errorMessageElement.textContent = `Login Token: ${data.token}`
-            errorMessageElement.classList.remove('hidden')
-
+            localStorage.setItem('token', data.token.split(' ')[1])
+            window.location.href = '/news';
         } else {
             errorMessageElement.textContent = 'An unexpected error occurred';
             errorMessageElement.classList.remove('hidden')
