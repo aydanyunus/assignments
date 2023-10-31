@@ -5,9 +5,8 @@
   "main": "./src/app.ts",
   "type": "module",
   "scripts": {
-    "start": "npm run start-gendoc && ts-node --esm src/app.ts ",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start-gendoc": "ts-node --esm src/swagger.ts"
+    "start": "ts-node --esm src/app.ts ",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
