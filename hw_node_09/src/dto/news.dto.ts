@@ -1,5 +1,5 @@
 export interface INews {
   title: string;
   text: string;
-  authodId: number;
+  authodId?: number;
 }

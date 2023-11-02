@@ -2,8 +2,12 @@ import { AppDataSource } from "../data-source.ts";
 import { News } from "../entity/news.entity.ts";
 import { INews } from "../dto/news.dto.ts";
 
-
 const newsRepository = AppDataSource.getRepository(News);
+
+const getAllNews = async () => {
+  const news = await newsRepository.find();
+  return news;
+};
 
 const getNews = async ({ page, size }) => {
   const news = await newsRepository.find();
@@ -40,12 +44,20 @@ const editNews = async (id: number, body: INews) => {
   return result;
 };
 
-const deleteNews = async (id: number) => {
-  const results = await newsRepository.delete(id);
-  return results;
+const deleteNews = async (
+  id: number
+): Promise<{ deletedNews: News | null; affected: number }> => {
+  const deletedNews = await newsRepository.findOne({ where: { id } });
+  if (deletedNews) {
+    const results = await newsRepository.delete(id);
+    return { deletedNews, affected: results.affected || 0 };
+  } else {
+    return { deletedNews: null, affected: 0 };
+  }
 };
 
 export default {
+  getAllNews,
   getNews,
   getNewsByID,
   addNews,

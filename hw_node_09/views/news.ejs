@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Newsposts</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -13,6 +14,10 @@
             }
         }
     </script>
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+
+
+
 </head>
 
 <body class="bg-blue-100 flex items-center justify-center py-6">
@@ -21,39 +26,97 @@
         <ul class="grid gap-6 justify-center" id="newsList">
         </ul>
     </div>
+
 </body>
 
 <script>
-    const fetchNews = async () => {
-        try {
-            const token = localStorage.getItem('token')
-            const response = await fetch('api/newsposts/?page=1&size=100', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                }
-            })
-            const data = await response.json();
-            const newsList = document.getElementById('newsList');
+    document.addEventListener("DOMContentLoaded", () => {
+
+        const socket = io();
+
+        const fetchNews = async () => {
+            try {
+                const token = localStorage.getItem('token')
+                const response = await fetch('api/newsposts/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                const data = await response.json();
+                const newsList = document.getElementById('newsList');
 
 
-            data.forEach((newspost) => {
-                const listItem = document.createElement('li');
-                listItem.className = "bg-white p-4 rounded-lg shadow-md";
-                listItem.innerHTML = `
+                data.forEach((newspost) => {
+
+                    const listItem = document.createElement('li');
+                    listItem.className = "bg-white p-4 rounded-lg shadow-md";
+                    listItem.id = `${newspost.id}`
+                    listItem.innerHTML = `
                     <h2 class="text-lg font-semibold text-gray-800 mb-2">${newspost.title}</h2>
                     <p class="text-gray-600">${newspost.text}</p>
                 `;
-                newsList.appendChild(listItem);
-            });
-        } catch (error) {
-            console.log(error)
+                    newsList.appendChild(listItem);
+                });
+
+            } catch (error) {
+                console.log(error)
+            }
         }
-    }
 
-    fetchNews()
+        socket.on('addNews', (newspost) => {
+            if (newspost.title && newspost.text) {
+                const newsList = document.getElementById('newsList');
+                const listItem = document.createElement('li');
+                listItem.className = "bg-white p-4 rounded-lg shadow-md";
+                listItem.innerHTML = `
+            <h2 class="text-lg font-semibold text-gray-800 mb-2">${newspost.title}</h2>
+            <p class="text-gray-600">${newspost.text}</p>
+        `;
+                newsList.appendChild(listItem);
+            }
+        });
+
+        socket.on('deleteNews', (newspost) => {
+            console.log(newspost.id)
+            if (newspost.deletedNews) {
+                const listItemToRemove = document.getElementById(newspost.id);
+
+                if (listItemToRemove) {
+                    listItemToRemove.remove();
+                } else {
+                    console.error("List item with the specified ID not found in the DOM.");
+                }
+            }
+
+        });
+
+        socket.on('updateNews', (newspost) => {
+            console.log('Received updateNews event:', newspost);
+
+            const liToEdit = document.getElementById(`${newspost.id}`);
+            if (liToEdit) {
+                const titleElement = liToEdit.querySelector('.text-lg');
+                const textElement = liToEdit.querySelector('.text-gray-600');
+
+                if (titleElement && textElement) {
+                    titleElement.textContent = newspost.title;
+                    textElement.textContent = newspost.text;
+                } else {
+                    console.error("Title or text element not found in the list item.");
+                }
+            } else {
+                console.error("List item with ID not found in the DOM.");
+            }
+        })
+
+
+        fetchNews()
+
+    })
+
+
 </script>
-
 
 </html>
