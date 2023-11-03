@@ -64,7 +64,6 @@ app.get("/news", (req, res) => {
 io.on("connection", (socket) => {
   console.log("user connected");
 
-
   socket.on("disconnect", () => {
     console.log("user disconnected");
   });
@@ -77,15 +76,20 @@ io.on("connection", (socket) => {
       });
     });
   });
-  socket.on("deleteNews", (newspost) => {
-    newsService.deleteNews(newspost.id).then((result) => {
-        io.emit("deleteNews", result.deletedNews);
-    });
+
+  socket.on("deleteNews", async (newspost) => {
+    const result = await newsService.deleteNews(newspost.id);
+    if (result.deletedNews) {
+      io.emit("deleteNews", { id: result.deletedNews.id});
+    }
   });
-  socket.on("updateNews", (newspost) => {
-    newsService.editNews(newspost.id, newspost).then((updatedNews) => {
+ 
+
+  socket.on("updateNews", async (newspost) => {
+    const updatedNews = await newsService.editNews(newspost.id, newspost);
+    if (updatedNews) {
       io.emit("updateNews", updatedNews);
-    });
+    }
   });
 });
 
@@ -93,14 +97,13 @@ export const sendNewsToClients = (newPost) => {
   io.emit("addNews", newPost);
 };
 
-export const sendDeletedNewsToClients = (newPost) => {
-  io.emit("deleteNews", newPost);
+export const sendDeletedNewsToClients = async (newPost) => {
+  await io.emit("deleteNews", newPost);
 };
 
-export const sendUpdatedNewsToClients = (newPost) => {
-  io.emit("updateNews", newPost);
+export const sendUpdatedNewsToClients = async (newPost) => {
+  await io.emit("updateNews", newPost);
 };
-
 
 app.use("/api/newsposts", authenticate, newsRouter);
 app.use("/auth", userRouter);

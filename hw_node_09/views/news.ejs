@@ -69,27 +69,30 @@
             if (newspost.title && newspost.text) {
                 const newsList = document.getElementById('newsList');
                 const listItem = document.createElement('li');
+                listItem.id = `${newspost.id}`
                 listItem.className = "bg-white p-4 rounded-lg shadow-md";
                 listItem.innerHTML = `
             <h2 class="text-lg font-semibold text-gray-800 mb-2">${newspost.title}</h2>
             <p class="text-gray-600">${newspost.text}</p>
         `;
                 newsList.appendChild(listItem);
+                socket.io('addNews', newspost)
             }
         });
 
-        socket.on('deleteNews', (newspost) => {
+        socket.on('deleteNews', async (newspost) => {
             console.log(newspost.id)
-            if (newspost.deletedNews) {
+            if (newspost.id) {
                 const listItemToRemove = document.getElementById(newspost.id);
 
                 if (listItemToRemove) {
-                    listItemToRemove.remove();
+                    listItemToRemove.parentNode.removeChild(listItemToRemove);
+
+                    socket.emit('deleteNews', { id: newspost.id });
                 } else {
                     console.error("List item with the specified ID not found in the DOM.");
                 }
             }
-
         });
 
         socket.on('updateNews', (newspost) => {
@@ -103,6 +106,8 @@
                 if (titleElement && textElement) {
                     titleElement.textContent = newspost.title;
                     textElement.textContent = newspost.text;
+                    socket.emit('updateNews', newspost);
+
                 } else {
                     console.error("Title or text element not found in the list item.");
                 }
