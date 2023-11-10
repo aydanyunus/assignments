@@ -106,7 +106,6 @@
                 if (titleElement && textElement) {
                     titleElement.textContent = newspost.title;
                     textElement.textContent = newspost.text;
-                    socket.emit('updateNews', newspost);
 
                 } else {
                     console.error("Title or text element not found in the list item.");

@@ -11,7 +11,7 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import { Server } from "socket.io";
 import http from "http";
-import newsService from "./services/news.service.ts";
+import initializeSocket from "./services/socket.service.ts";
 
 const initApp = async () => {
   try {
@@ -61,49 +61,11 @@ app.get("/news", (req, res) => {
   res.render("news");
 });
 
-io.on("connection", (socket) => {
-  console.log("user connected");
+initializeSocket(io);
 
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
-  });
-
-  socket.on("addNews", (newspost) => {
-    newsService.addNews(newspost).then((newPost) => {
-      io.emit("addNews", {
-        title: newPost.title,
-        text: newPost.text,
-      });
-    });
-  });
-
-  socket.on("deleteNews", async (newspost) => {
-    const result = await newsService.deleteNews(newspost.id);
-    if (result.deletedNews) {
-      io.emit("deleteNews", { id: result.deletedNews.id});
-    }
-  });
- 
-
-  socket.on("updateNews", async (newspost) => {
-    const updatedNews = await newsService.editNews(newspost.id, newspost);
-    if (updatedNews) {
-      io.emit("updateNews", updatedNews);
-    }
-  });
-});
-
-export const sendNewsToClients = (newPost) => {
-  io.emit("addNews", newPost);
-};
-
-export const sendDeletedNewsToClients = async (newPost) => {
-  await io.emit("deleteNews", newPost);
-};
-
-export const sendUpdatedNewsToClients = async (newPost) => {
-  await io.emit("updateNews", newPost);
-};
+export const sendNewsToClients = (newPost) => io.emit("addNews", newPost);
+export const sendDeletedNewsToClients = async (newPost) => await io.emit("deleteNews", newPost);
+export const sendUpdatedNewsToClients = async (newPost) => await io.emit("updateNews", newPost);
 
 app.use("/api/newsposts", authenticate, newsRouter);
 app.use("/auth", userRouter);
