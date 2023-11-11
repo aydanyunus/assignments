@@ -29,7 +29,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTY5ODQ5NjA2MCwiZXhwIjoxNjk4NTMyMDYwfQ.FdsmD2QAEjq9XYXU34hUKH0d323dCg8FGTzh_qwGHgo",
+							"value": "{{loginToken}}",
 							"type": "string"
 						}
 					]
@@ -85,7 +85,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTY5ODQ5NjA2MCwiZXhwIjoxNjk4NTMyMDYwfQ.FdsmD2QAEjq9XYXU34hUKH0d323dCg8FGTzh_qwGHgo",
+							"value": "{{loginToken}}",
 							"type": "string"
 						}
 					]
@@ -139,7 +139,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTY5ODUxODE4NCwiZXhwIjoxNjk4NTU0MTg0fQ.mjmaufQXtOmhZ9LqkkTqm4KsAsz3jj5NituEqkTpDkA",
+							"value": "{{loginToken}}",
 							"type": "string"
 						}
 					]
@@ -192,7 +192,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTY5ODUxODE4NCwiZXhwIjoxNjk4NTU0MTg0fQ.mjmaufQXtOmhZ9LqkkTqm4KsAsz3jj5NituEqkTpDkA",
+							"value": "{{loginToken}}",
 							"type": "string"
 						}
 					]
@@ -246,7 +246,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjUsImlhdCI6MTY5ODUxODE4NCwiZXhwIjoxNjk4NTU0MTg0fQ.mjmaufQXtOmhZ9LqkkTqm4KsAsz3jj5NituEqkTpDkA",
+							"value": "{{loginToken}}",
 							"type": "string"
 						}
 					]
@@ -281,6 +281,15 @@
 							"    pm.expect(responseData).to.have.property('message', 'Login successful');\r",
 							"\r",
 							"    pm.expect(responseData).to.have.property('token').and.to.not.be.empty;\r",
+							"\r",
+							"    const tokenParts = responseData.token.split(' ');\r",
+							"\r",
+							"    if (tokenParts.length === 2) {\r",
+							"        pm.environment.set('loginToken', tokenParts[1]);\r",
+							"    } else {\r",
+							"        console.error('Unexpected token format:', responseData.token);\r",
+							"    }\r",
+							"\r",
 							"});"
 						],
 						"type": "text/javascript"
@@ -324,14 +333,25 @@
 							"\r",
 							"    pm.expect(responseData).to.be.an('object');\r",
 							"\r",
-							"    if (pm.response.code === 200) {\r",
+							"    if (pm.response.code === 201) {\r",
 							"        pm.expect(responseData).to.have.property('message', 'Registration successful');\r",
 							"\r",
 							"        pm.expect(responseData).to.have.property('token').and.to.not.be.empty;\r",
+							"\r",
+							"        const tokenParts = responseData.token.split(' ');\r",
+							"\r",
+							"        if (tokenParts.length === 2) {\r",
+							"            pm.environment.set('registerToken', tokenParts[1]);\r",
+							"\r",
+							"        } else {\r",
+							"            console.error('Unexpected token format:', responseData.token);\r",
+							"        }\r",
 							"    } else {\r",
 							"        pm.expect(responseData).to.not.have.property('message', 'Registration successful');\r",
 							"    }\r",
-							"});"
+							"});\r",
+							"\r",
+							""
 						],
 						"type": "text/javascript"
 					}
@@ -342,7 +362,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"newadmin11111\",\r\n    \"email\": \"newadmin11111@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"confirmPassword\": \"123\"\r\n}",
+					"raw": "{\r\n    \"username\": \"newadmin139\",\r\n    \"email\": \"newadmin139@gmail.com\",\r\n    \"password\": \"123\",\r\n    \"confirmPassword\": \"123\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
